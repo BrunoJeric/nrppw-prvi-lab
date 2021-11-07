@@ -1,0 +1,14 @@
+extends layout
+
+block scripts
+  script(src='../scripts/user.js')
+
+block content
+  .w3-card-4
+    h1#name #{user.name.givenName}
+    h1#lastname #{user.name.familyName}
+    script.
+      userName="#{user.name.givenName}";
+      userLastName="#{user.name.familyName}";
+      userId="#{user.user_id}";
+    #map
