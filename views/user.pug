@@ -5,12 +5,12 @@ block scripts
 
 block content
   .w3-card-4
-    h1#name #{user.name}
+    h1#name #{user.displayName}
     h3#lon
     h3#lat
     script.
       console.log(user);
-      userName="#{user.name.givenName || user.name}";
-      userLastName="#{user.name.familyName || user.name}";
+      userName="#{user.name.givenName || user.name.split(' ')[0]}";
+      userLastName="#{user.name.familyName || user.name.split(' ')[1]}";
       userId="#{user.user_id}";
     #map
