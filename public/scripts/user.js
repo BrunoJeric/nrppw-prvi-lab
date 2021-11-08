@@ -20,7 +20,7 @@ function success(pos) {
 
 	var thisUser = {
 		id: userId,
-		name: userName + ' ' + userLastName,
+		name: userName,
 		lat: coordintes.latitude,
 		lon: coordintes.longitude,
 		time: Date(),
