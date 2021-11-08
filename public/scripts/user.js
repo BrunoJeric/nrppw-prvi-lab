@@ -1,12 +1,12 @@
-var last_users = [];
+var last_users = {};
 (function () {
 	axios
 		.get('/helpers')
 		.then((response) => {
 			last_users = response.data; //response.data
-			console.log(response.data);
 		})
 		.catch((error) => console.log(error));
+		console.log(last_users)
 })();
 
 navigator.geolocation.getCurrentPosition(success, error, options);
@@ -25,35 +25,30 @@ function success(pos) {
 		lon: coordintes.longitude,
 		time: Date(),
 	};
-	console.log('thisUser', thisUser);
-	var exists = false;
-	last_users.forEach(us =>{
-		if(userId == us.id) exists = true;
-	})
+
+	document.getElementById('lon').textContent = 'Longitude: ' + coordintes.longitude;
+	document.getElementById('lat').textContent = 'Latitude: ' + coordintes.latitude;
+
 	
-	if (!exists) last_users.push(thisUser);
+	if (!(userId in last_users)) last_users[userId] = thisUser;
+
 	var map = new L.map('map', mapOptions);
 	var layer = new L.TileLayer(
 		'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 	);
 
 	map.addLayer(layer);
-	if (last_users.length > 0) {
-		console.log(last_users);
-		last_users.forEach((user) => {
-			if (user !== null) {
-				console.log(user);
-				let marker = new L.Marker([user.lat, user.lon], {
-					title: user.name,
-				});
-				marker
-					.addTo(map)
-					.bindPopup(user.name + ' ' + user.time)
-					.openPopup();
-			}
+
+	for (id in last_users) {
+		let user = last_users[id];
+		let marker = new L.Marker([user.lat, user.lon], {
+			title: user.name,
 		});
+		marker
+			.addTo(map)
+			.bindPopup(user.name + ' ' + user.time)
+			.openPopup();
 	}
-	console.log(last_users);
 
 	axios.post('/helpers', thisUser)
     .then(response => console.log(response));

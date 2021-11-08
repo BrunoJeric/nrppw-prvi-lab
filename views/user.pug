@@ -5,8 +5,9 @@ block scripts
 
 block content
   .w3-card-4
-    h1#name #{user.name.givenName}
-    h1#lastname #{user.name.familyName}
+    h1#name #{user.name.givenName} #{user.name.familyName}
+    h3#lon
+    h3#lat
     script.
       userName="#{user.name.givenName}";
       userLastName="#{user.name.familyName}";
