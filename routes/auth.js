@@ -35,9 +35,6 @@ router.get('/logout', (req, res) => {
 
   var returnTo = req.protocol + '://' + req.hostname;
   var port = req.connection.localPort;
-  if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo += ':' + port;
-  }
 
   var logoutURL = new url.URL(
     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
